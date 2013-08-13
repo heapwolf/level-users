@@ -48,14 +48,15 @@ users.addIndexes(['email'], function(err) {
 ```
 
 ### `get`
-Get a user by their uuid.
+Get a user by their uuid. Returns the user object and a put method that
+can be used to update the user data.
 
 ```js
-users.get(id, function(err, user) {
+users.get(id, function(err, user, put) {
 })
 ```
 
-Here's an example using an index.
+Here's an example using an index. returns the user's id.
 
 ```js
 users.get({ email: 'test@tap.com' }, function(err, id) {
