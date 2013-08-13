@@ -2,7 +2,9 @@
 Store and get users. Salt their passwords, persist them to disk.
 
 # USAGE
-Pass a leveldb instance to the `Users` constructor.
+Pass a leveldb instance to the `Users` constructor. I recommend using
+[`sublevel`][0] to bucket your database's meta data and [`multilevel`][1]
+if your database is on the network.
 
 ```js
 var db = level('./db')
@@ -74,3 +76,6 @@ users.auth(id, password, function(err, user, put) {
   })
 })
 ```
+
+[0]:https://github.com/dominictarr/level-sublevel
+[1]:https://github.com/juliangruber/multilevel
