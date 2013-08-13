@@ -79,6 +79,22 @@ users.auth(id, password, function(err, user, put) {
 })
 ```
 
+### `addGroups`
+Add groups to a user, this is just sugar for array index checking.
+
+```js
+users.addGroups(id, ['super','rooty'], function(err, user, put) {
+})
+```
+
+### `removeGroups`
+Remove groups from a user, also just sugar for array index checking.
+
+```js
+users.removeGroups(id, ['rooty'], function(err, user, put) {
+})
+```
+
 [0]:https://github.com/dominictarr/level-sublevel
 [1]:https://github.com/juliangruber/multilevel
 [2]:https://github.com/maxogden/level-user

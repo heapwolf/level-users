@@ -156,8 +156,8 @@ Users.prototype.create = function(user, cb) {
   })
 }
 
-Users.prototype.removeGroups = function(indexedKey, groups, cb) {
-  this.get(indexedKey, function(err, user, put) {
+Users.prototype.removeGroups = function(id, groups, cb) {
+  this.get(id, function(err, user, put) {
     if (err) {
       return cb(err)
     }
@@ -167,17 +167,23 @@ Users.prototype.removeGroups = function(indexedKey, groups, cb) {
         user.groups.splice(pos, 1)
       }
     })
-    put(user, cb)
+    cb(null, user, put)
   })
 }
 
-Users.prototype.addGroups = function(indexedKey, groups, cb) {
-  this.get(indexedKey, function(err, user, put) {
+Users.prototype.addGroups = function(id, groups, cb) {
+  this.get(id, function(err, user, put) {
     if (err) {
       return cb(err)
     }
-    user.groups = user.groups.concat(groups)
-    put(user, cb)
+    groups.forEach(function(group, index) {
+
+      var pos = user.groups.indexOf(group)
+      if (pos < 0) {
+        user.groups.push(group)
+      }
+    })
+    cb(null, user, put)
   })
 }
 
