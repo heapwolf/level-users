@@ -9,7 +9,7 @@ var users = Users(db)
 
 test('create, get and delete a user', function (t) {
 
-  t.plan(5)
+  t.plan(6)
 
   var user = {
     username: 'test',
@@ -32,14 +32,14 @@ test('create, get and delete a user', function (t) {
         t.equal(user.username, 'test', 'username matches')
         t.equal(user.password, undefined, 'original password was removed')
         t.equal(!!user.salt, true, 'salt was created')
-        t.equal(user.foo, 100)
+        t.equal(user.foo, 100, 'arbitrary member found')
 
         users.remove(id, function(err) {
           if (err) {
-            t.fail('could not remove record')
+            t.fail(true, 'could not remove record')
             return t.end()
           }
-          t.ok('removed the record')
+          t.ok(true, 'removed the record')
           t.end()
         })
       })
@@ -60,7 +60,7 @@ test('dont allow duplicate users', function (t) {
 
   users.create(user, function(err, id) {
     if (err) {
-      t.fail(err)
+      t.fail(err, 'could not create the user')
       return t.end()
     }
 
@@ -78,7 +78,7 @@ test('dont allow duplicate users', function (t) {
         })
       }
       else {
-        t.fail('Dupicate user created')
+        t.fail(true, 'dupicate user created')
       }
     })
   })
@@ -139,9 +139,7 @@ test('create and auth a user', function (t) {
           return t.end()
         }
         t.ok(true, 'removed the record')
-        rimraf('./db', function() {
-          t.end()
-        })
+        t.end()
       })
     })
   })

@@ -89,8 +89,8 @@ Users.prototype.create = function(user, cb) {
 
   var users = this
 
-  if (!user.username || !user.password) {
-    return cb(new Error('`username` and `password` required'))
+  if (!user.username) {
+    return cb(new Error('`username` required'))
   }
 
   if (!user.groups) {
@@ -108,7 +108,7 @@ Users.prototype.create = function(user, cb) {
       return cb(err)
     }
 
-    users.get(user.username, function(err) {
+    users.get({ username: user.username }, function(err, u, p) {
       if (!err) {
         return cb(new Error('User already exists'))
       }
@@ -132,12 +132,7 @@ Users.prototype.create = function(user, cb) {
         }
       })
 
-      bcrypt.hash(user.password, 5, function(err, bcryptedPassword) {
-        if (err) {
-          return cb(err)
-        }
-        user.salt = bcryptedPassword
-        delete user.password
+      function batch(user) {
 
         ops.push({ type: 'put', key: users.prefix + id, value: user })
 
@@ -147,7 +142,21 @@ Users.prototype.create = function(user, cb) {
           }
           cb(null, id)
         })
-      })
+      }
+
+      if (user.password) {
+        bcrypt.hash(user.password, 5, function(err, bcryptedPassword) {
+          if (err) {
+            return cb(err)
+          }
+          user.salt = bcryptedPassword
+          delete user.password
+          batch(user)
+        })
+      }
+      else {
+        batch(user)
+      }
     })
   })
 }
