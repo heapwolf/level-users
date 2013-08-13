@@ -1,7 +1,7 @@
 {
   "name": "level-users",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Store and get users. Salt their passwords, persist them to disk.",
   "main": "index.js",
   "scripts": {
     "test": "node ./test/index.js"
@@ -13,6 +13,14 @@
     "tap": "~0.4.4",
     "rimraf": "~2.2.2"
   },
+  "keywords": [
+    "izs",
+    "pants",
+    "bcrypt",
+    "users",
+    "salt",
+    "passwords"
+  ],
   "dependencies": {
     "bcrypt": "~0.7.6",
     "node-uuid": "~1.4.0"

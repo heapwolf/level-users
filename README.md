@@ -1,5 +1,5 @@
 # SYNOPSIS
-Store and get users, salt their passwords, persist them to disk.
+Store and get users. Salt their passwords, persist them to disk.
 
 # USAGE
 Pass a leveldb instance to the `Users` constructor.
