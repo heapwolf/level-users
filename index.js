@@ -64,12 +64,7 @@ Users.prototype.addIndexes = function(newIndexs, cb) {
   users.get(storedIndexesKey, function(err, indexes, put) {
 
     if (err) {
-      return users.db.put(storedIndexesKey, ['username'], opts, function(err) {
-        if (err) {
-          return cb(err)
-        }
-        cb(null)
-      })
+      return users.db.put(storedIndexesKey, ['username'], opts, cb)
     }
     newIndexs.forEach(function(index, i) {
       if (indexes.indexOf(index) < 0) {
@@ -108,7 +103,7 @@ Users.prototype.create = function(user, cb) {
       return cb(err)
     }
 
-    users.get({ username: user.username }, function(err, u, p) {
+    users.get({ username: user.username }, function(err) {
       if (!err) {
         return cb(new Error('User already exists'))
       }
@@ -191,7 +186,7 @@ Users.prototype.auth = function(id, password, cb) {
   var users = this
 
   if (!id || !password) {
-    var msg = 'requires `username` and `password`.'
+    var msg = 'requires `id` and `password`.'
     var err = new Error(msg)
     return cb(err)
   }
