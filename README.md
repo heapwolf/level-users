@@ -9,6 +9,8 @@ var db = level('./db')
 var users = Users(db)
 ```
 
+# API
+
 ### `create`
 Create a new user by passing a user object. Only `username` is required.
 When a new user is created, a uuid is returned.
