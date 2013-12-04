@@ -4,7 +4,8 @@ var rimraf = require('rimraf')
 var tap = require('tap')
 var test = tap.test
 
-var db = level('./db')
+var sublevel = require('level-sublevel')
+var db = sublevel(level('./db'))
 var users = Users(db)
 
 test('create, get and delete a user', function (t) {
