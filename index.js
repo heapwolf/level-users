@@ -9,11 +9,11 @@ var opts = { valueEncoding: 'json' }
 
 function Users(opts) {
 
-  if (!(this instanceof Users)) { 
+  if (!(this instanceof Users)) {
     return new Users(opts)
   }
 
-  if (opts && opts._events) {
+  if (opts && (opts._events || opts.sublevels)) {
     this.db = opts
   }
   else if (!opts || !opts.db) {
@@ -23,7 +23,14 @@ function Users(opts) {
     this.db = opts.db
   }
 
-  this.prefix = opts.prefix || ''
+  this.prefix = ''
+  if (opts.prefix) {
+    if (typeof opts.prefix == 'string') {
+      this.prefix = opts.prefix
+    } else if (typeof opts.prefix == 'function') {
+      this.prefix = opts.prefix()
+    }
+  }
 }
 
 Users.prototype.get = function get(id, cb) {
