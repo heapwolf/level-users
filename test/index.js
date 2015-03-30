@@ -175,7 +175,7 @@ test('create and notOk to auth a user', function (t) {
   })
 })
 
-test('add groups to a user', function (t) {
+test('add metadata to a user', function (t) {
 
   t.plan(2)
 
@@ -190,7 +190,7 @@ test('add groups to a user', function (t) {
       t.notOk(true, err)
       return t.end()
     }
-    users.addGroups(id, ['super','rooty'], function(err, user, put) {
+    users.addMetadata(id, {groups: ['super', 'rooty']}, function(err, user, put) {
       if (err) {
         t.notOk(true, err)
         return t.end()
@@ -201,7 +201,7 @@ test('add groups to a user', function (t) {
           return t.end()
         }
         users.get(id, function(err, user) {
-          t.deepEqual(user.groups, ["super", "rooty"])
+          t.deepEqual(user.metadata.groups, ["super", "rooty"])
           users.remove(id, function(err) {
             if (err) {
               t.notOk(true, err)
@@ -232,7 +232,7 @@ test('remove groups from a user', function (t) {
         t.notOk(true, err)
         return t.end()
       }
-      users.removeGroups(id, ['rooty'], function(err, user, remove) {
+      users.addMetadata(id, {groups: ['super']}, { method: 'override' }, function(err, user, remove) {
         if (err) {
           t.notOk(true, err)
           return t.end()
@@ -249,7 +249,7 @@ test('remove groups from a user', function (t) {
         return t.end()
       }
       users.get(id, function(err, user) {
-        t.deepEqual(user.groups, ['super'])
+        t.deepEqual(user.metadata.groups, ['super'])
         rimraf('./db', function() {
           t.end()
         })
@@ -262,7 +262,7 @@ test('remove groups from a user', function (t) {
       t.notOk(true, err)
       return t.end()
     }
-    users.addGroups(id, ['super','rooty'], function(err, user, add) {
+    users.addMetadata(id, {groups: ['super','rooty']}, function(err, user, add) {
       if (err) {
         t.notOk(true, err)
         return t.end()
@@ -271,4 +271,3 @@ test('remove groups from a user', function (t) {
     })
   })
 })
-

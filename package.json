@@ -9,7 +9,7 @@
   "author": "hij1nx",
   "license": "MIT",
   "devDependencies": {
-    "level": "~0.12.0",
+    "level": "^0.18.0",
     "tap": "~0.4.4",
     "rimraf": "~2.2.2",
     "level-sublevel": "~5.1.1"
@@ -23,7 +23,9 @@
     "passwords"
   ],
   "dependencies": {
-    "bcrypt": "~0.7.6",
-    "node-uuid": "~1.4.0"
+    "bcrypt": "^0.8.1",
+    "level-sublevel": "^6.4.6",
+    "node-uuid": "~1.4.0",
+    "xtend": "^4.0.0"
   }
 }
